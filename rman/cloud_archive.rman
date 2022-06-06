@@ -1,0 +1,9 @@
+###########################################################
+# cloud_archive.rman
+###########################################################
+connect target /
+@cloud_encrypt.rman
+run {
+  BACKUP DEVICE TYPE SBT ARCHIVELOG ALL NOT BACKED UP 2 TIMES;
+  DELETE NOPROMPT ARCHIVELOG ALL BACKED UP 2 TIMES TO SBT; 
+}

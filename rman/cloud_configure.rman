@@ -1,0 +1,13 @@
+###########################################################
+# cloud_configure.rman
+###########################################################
+connect target /
+run {
+  CONFIGURE CONTROLFILE AUTOBACKUP ON;
+  CONFIGURE CHANNEL DEVICE TYPE SBT PARMS
+    'SBT_LIBRARY=/u01/app/oracle/oci/lib/libopc.so,
+     ENV=(OPC_PFILE=/u01/app/oracle/oci/oci_config.ora)';
+  CONFIGURE COMPRESSION ALGORITHM 'MEDIUM';
+  CONFIGURE DEVICE TYPE SBT BACKUP TYPE to COMPRESSED BACKUPSET PARALLELISM 4;
+  CONFIGURE BACKUP OPTIMIZATION ON;
+}

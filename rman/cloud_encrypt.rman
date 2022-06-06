@@ -1,0 +1,7 @@
+###########################################################
+# cloud_encrypt.rman
+###########################################################
+# Non-TDE
+# SET ENCRYPTION ON IDENTIFIED BY 'Th1515R3quir3d#' ONLY;
+# TDE Enabled
+SET ENCRYPTION ON;

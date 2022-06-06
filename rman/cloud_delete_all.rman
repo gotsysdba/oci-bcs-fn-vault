@@ -1,0 +1,12 @@
+###########################################################
+# cloud_delete_all.rman
+###########################################################
+connect target /
+@cloud_encrypt.rman
+run{
+  CROSSCHECK BACKUP DEVICE TYPE SBT;
+  CROSSCHECK COPY DEVICE TYPE SBT;
+  DELETE FORCE NOPROMPT BACKUP DEVICE TYPE SBT;
+  DELETE FORCE NOPROMPT COPY DEVICE TYPE SBT;
+  DELETE FORCE NOPROMPT BACKUP OF ARCHIVELOG ALL DEVICE TYPE SBT;
+}

@@ -1,0 +1,68 @@
+#!/bin/env ksh
+## Copyright © 2022, Oracle and/or its affiliates. 
+## All rights reserved. The Universal Permissive License (UPL), Version 1.0 as shown at http://oss.oracle.com/licenses/upl
+
+## Check tha the opc_installer.zip file exists
+if [[ ! -f ./opc_installer.zip ]]; then
+    print -- "Please download the Cloud Backup Module and stage the zip file here."
+    exit 1
+fi
+
+## Create the Bastion Tunnel
+print -- "Setting up Bastion Tunnel"
+${bastion_tunnel}
+sleep 10
+
+## Create a Staging Directory
+print -- "Staging Files"
+ssh  -i ${bastion_key} -p 8091 localhost 'sudo rm -rf /tmp/bcs; mkdir /tmp/bcs'
+
+## Perform Some SCPs
+scp -r -i ${bastion_key} -P 8091 rman localhost:/tmp/bcs
+scp -r -i ${bastion_key} -P 8091 ${oci_priv_key_path} localhost:/tmp/bcs/bcs.pem
+scp -r -i ${bastion_key} -P 8091 ./opc_installer.zip localhost:/tmp/bcs
+
+cat <<- EOL | ssh  -i ${bastion_key} -p 8091 localhost 'cat > /tmp/bcs/bcs_installer.ksh'
+    #!/bin/env ksh
+    export ORAENV_ASK=NO
+    source /usr/local/bin/oraenv
+
+    mkdir -p \$HOME/.oci
+    mkdir -p \$HOME/oci
+    mkdir -p \$ORACLE_BASE/oci/lib
+    mkdir -p \$ORACLE_BASE/oci/oci_wallet
+
+    unzip -o /tmp/bcs/opc_installer.zip -d \$HOME/oci
+    mv /tmp/bcs/*.pem \$HOME/.oci/
+    mv /tmp/bcs/rman \$HOME/rman
+
+    java -jar \$HOME/oci/opc_installer/oci_installer/oci_install.jar \
+      -host https://objectstorage.${oci_region}.oraclecloud.com \
+      -pvtKeyFile /home/oracle/.oci/bcs.pem \
+      -pubFingerPrint ${oci_fingerprint} \
+      -tOCID ${oci_tenancy_ocid} \
+      -uOCID ${oci_user_ocid} \
+      -cOCID ${oci_compartment_ocid} \
+      -libDir \$ORACLE_BASE/oci/lib \
+      -walletDir \$ORACLE_BASE/oci/oci_wallet \
+      -configFile \$ORACLE_BASE/oci/oci_config.ora \
+      -bucket RMAN_BCS \
+      -enableArchiving false
+
+    rm -rf \$HOME/oci 2> /dev/null
+
+    print -- "Creating Default Profile"
+    # Using print over HEREDOC to avoid tab/EOF issues
+    print -- "[DEFAULT]" > \$HOME/.oci/config
+    print -- "compartment=${oci_compartment_ocid}" >> \$HOME/.oci/config
+    print -- "user=${oci_user_ocid}" >> \$HOME/.oci/config
+    print -- "fingerprint=${oci_fingerprint}" >> \$HOME/.oci/config
+    print -- "tenancy=${oci_tenancy_ocid}" >> \$HOME/.oci/config
+    print -- "region=${oci_region}" >> \$HOME/.oci/config
+    print -- "key_file=/home/oracle/.oci/bcs.pem" >> \$HOME/.oci/config
+    print -- "bucket=RMAN_BCS_VAULT" >> \$HOME/.oci/config
+
+    exit 0
+EOL
+
+ssh  -i ${bastion_key} -p 8091 localhost 'sudo chown -R oracle:oinstall /tmp/bcs'

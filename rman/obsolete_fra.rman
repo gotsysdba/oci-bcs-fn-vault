@@ -1,0 +1,9 @@
+###########################################################
+# obsolete_fra.rman
+###########################################################
+connect target /
+run{
+  CROSSCHECK BACKUP DEVICE TYPE DISK;
+  CROSSCHECK COPY DEVICE TYPE DISK;
+  DELETE NOPROMPT OBSOLETE DEVICE TYPE DISK;
+}

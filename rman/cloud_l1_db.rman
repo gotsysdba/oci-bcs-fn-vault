@@ -1,0 +1,12 @@
+###########################################################
+# cloud_l1_db.rman
+###########################################################
+connect target /
+@cloud_encrypt.rman
+run {
+  BACKUP DEVICE TYPE SBT 
+    SECTION SIZE 64G INCREMENTAL LEVEL 1 DATABASE PLUS
+    ARCHIVELOG NOT BACKED UP DELETE INPUT;
+	CROSSCHECK BACKUP DEVICE TYPE SBT;
+	DELETE OBSOLETE DEVICE TYPE SBT;
+}

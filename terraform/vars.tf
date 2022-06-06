@@ -29,6 +29,11 @@ variable "appl_name" {
   default = "vault-objectstore"
 }
 
+variable "container_engine" {
+  description = "Container Engine to be Used (Docker/Podman)"
+  default     = "podman"
+}
+
 variable "scratch_build" {
   description = "Build the Function from Scratch"
   default     = false
@@ -50,7 +55,7 @@ variable "vcn_is_ipv6enabled" {
 
 locals {
   compartment_ocid      = var.compartment_ocid != "" ? var.compartment_ocid : var.tenancy_ocid
-  oci_podman_repository = join("", [lower(lookup(data.oci_identity_regions.oci_regions.regions[0], "key")), ".ocir.io"])
+  oci_container_repository = join("", [lower(lookup(data.oci_identity_regions.oci_regions.regions[0], "key")), ".ocir.io"])
   oci_namespace         = lookup(data.oci_objectstorage_namespace.namespace, "namespace")
   oci_username          = data.oci_identity_user.identity_user.name
   project_path          = abspath(path.root)

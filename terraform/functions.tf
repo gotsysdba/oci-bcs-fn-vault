@@ -13,7 +13,7 @@ resource "oci_functions_application" "object_vault" {
 resource "oci_functions_function" "object_vault" {
   application_id     = oci_functions_application.object_vault.id
   display_name       = var.appl_name
-  image              = "${local.oci_podman_repository}/${local.oci_namespace}/${var.appl_name}:0.0.1"
+  image              = "${local.oci_container_repository}/${local.oci_namespace}/${var.appl_name}:0.0.1"
   memory_in_mbs      = "256"
   timeout_in_seconds = "30"
   trace_config {

@@ -4,7 +4,7 @@
 resource "oci_objectstorage_bucket" "filesystem" {
   access_type           = "NoPublicAccess"
   auto_tiering          = "Disabled"
-  compartment_id        = var.compartment_ocid
+  compartment_id        = local.compartment_ocid
   name                  = "FILESYSTEM"
   namespace             = data.oci_objectstorage_namespace.namespace.namespace
   object_events_enabled = "false"
@@ -15,7 +15,7 @@ resource "oci_objectstorage_bucket" "filesystem" {
 resource "oci_objectstorage_bucket" "rman_bcs" {
   access_type           = "NoPublicAccess"
   auto_tiering          = "Disabled"
-  compartment_id        = var.compartment_ocid
+  compartment_id        = local.compartment_ocid
   name                  = "RMAN_BCS"
   namespace             = data.oci_objectstorage_namespace.namespace.namespace
   object_events_enabled = "true"
@@ -26,7 +26,7 @@ resource "oci_objectstorage_bucket" "rman_bcs" {
 resource "oci_objectstorage_bucket" "rman_bcs_vault" {
   access_type           = "NoPublicAccess"
   auto_tiering          = "Disabled"
-  compartment_id        = var.compartment_ocid
+  compartment_id        = local.compartment_ocid
   name                  = "RMAN_BCS_VAULT"
   namespace             = data.oci_objectstorage_namespace.namespace.namespace
   object_events_enabled = "false"

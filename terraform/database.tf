@@ -14,7 +14,7 @@ resource "random_password" "db_system_password" {
 resource "oci_database_db_system" "db_system" {
   count                   = var.database_demo ? 1 : 0
   availability_domain     = local.availability_domain
-  compartment_id          = var.compartment_ocid
+  compartment_id          = local.compartment_ocid
   shape                   = "VM.Standard2.1"
   data_storage_size_in_gb = "256"
   database_edition        = "ENTERPRISE_EDITION"

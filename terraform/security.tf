@@ -5,7 +5,7 @@ resource "oci_identity_dynamic_group" "dynamic_group" {
   compartment_id = var.tenancy_ocid
   name           = "OBCS_Functions"
   description    = "Function Dynamic Group"
-  matching_rule  = "ALL {resource.type = 'fnfunc', resource.compartment.id = '${var.compartment_ocid}'}"
+  matching_rule  = "ALL {resource.type = 'fnfunc', resource.compartment.id = '${local.compartment_ocid}'}"
 }
 
 # Assign the resource to this compartments parent
@@ -14,9 +14,9 @@ resource "oci_identity_policy" "bcs_policy" {
   description    = "Oracle Backup Cloud Service Object Storage Policies"
   name           = "OBCS_Object_Store"
   statements     = [
-    "Allow dynamic-group OBCS_Functions to manage objects in compartment id ${var.compartment_ocid}",
-    "Allow dynamic-group OBCS_Functions to manage buckets in compartment id ${var.compartment_ocid}",
-    "Allow service objectstorage-${var.region} to manage object-family in compartment id ${var.compartment_ocid}"
+    "Allow dynamic-group OBCS_Functions to manage objects in compartment id ${local.compartment_ocid}",
+    "Allow dynamic-group OBCS_Functions to manage buckets in compartment id ${local.compartment_ocid}",
+    "Allow service objectstorage-${var.region} to manage object-family in compartment id ${local.compartment_ocid}"
   ]
 }
 

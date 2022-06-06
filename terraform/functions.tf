@@ -2,7 +2,7 @@
 # All rights reserved. The Universal Permissive License (UPL), Version 1.0 as shown at http://oss.oracle.com/licenses/upl
 
 resource "oci_functions_application" "object_vault" {
-  compartment_id = var.compartment_ocid
+  compartment_id = local.compartment_ocid
   display_name   = var.appl_name
   subnet_ids     = [oci_core_subnet.subnet_private.id]
   trace_config {

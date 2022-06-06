@@ -3,11 +3,21 @@
 
 // Basic Hidden
 variable "tenancy_ocid" {}
-variable "compartment_ocid" {}
+variable "compartment_ocid" {
+  default = ""
+}
 variable "region" {}
-variable "user_ocid" {}
-variable "fingerprint" {}
-variable "private_key_path" {}
+
+// Extra Hidden
+variable "current_user_ocid" {
+  default = ""
+}
+variable "fingerprint" {
+  default = ""
+}
+variable "private_key_path" {
+  default = ""
+}
 
 // General Configuration
 variable "res_prefix" {
@@ -39,6 +49,7 @@ variable "vcn_is_ipv6enabled" {
 }
 
 locals {
+  compartment_ocid      = var.compartment_ocid != "" ? var.compartment_ocid : var.tenancy_ocid
   oci_podman_repository = join("", [lower(lookup(data.oci_identity_regions.oci_regions.regions[0], "key")), ".ocir.io"])
   oci_namespace         = lookup(data.oci_objectstorage_namespace.namespace, "namespace")
   oci_username          = data.oci_identity_user.identity_user.name

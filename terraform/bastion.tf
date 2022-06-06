@@ -3,7 +3,7 @@
 
 resource "oci_bastion_bastion" "bastion" {
   count            = var.database_demo ? 1 : 0
-  compartment_id   = var.compartment_ocid
+  compartment_id   = local.compartment_ocid
   name             = format("%s-bastion", lower(var.res_prefix))
   bastion_type     = "STANDARD"
   target_subnet_id = oci_core_subnet.subnet_private.id

@@ -3,5 +3,5 @@
 
 resource "oci_identity_auth_token" "auth_token" {
     description = var.appl_name
-    user_id     = var.user_ocid
+    user_id     = var.current_user_ocid
 }

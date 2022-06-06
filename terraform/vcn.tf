@@ -2,7 +2,7 @@
 # All rights reserved. The Universal Permissive License (UPL), Version 1.0 as shown at http://oss.oracle.com/licenses/upl
 
 resource "oci_core_vcn" "vcn" {
-  compartment_id = var.compartment_ocid
+  compartment_id = local.compartment_ocid
   display_name   = format("%s-vcn", lower(var.res_prefix))
   cidr_block     = var.vcn_cidr
   is_ipv6enabled = var.vcn_is_ipv6enabled
@@ -10,13 +10,13 @@ resource "oci_core_vcn" "vcn" {
 }
 
 resource "oci_core_nat_gateway" "nat_gateway" {
-  compartment_id = var.compartment_ocid
+  compartment_id = local.compartment_ocid
   vcn_id         = oci_core_vcn.vcn.id
   display_name   = format("%s-nat-gateway", lower(var.res_prefix))
 }
 
 resource "oci_core_route_table" "route_table_nat_gw" {
-  compartment_id = var.compartment_ocid
+  compartment_id = local.compartment_ocid
   vcn_id         = oci_core_vcn.vcn.id
   display_name   = format("%s-route-table-nat-gw", lower(var.res_prefix))
   route_rules {
@@ -27,7 +27,7 @@ resource "oci_core_route_table" "route_table_nat_gw" {
 }
 
 resource "oci_core_subnet" "subnet_private" {
-  compartment_id             = var.compartment_ocid
+  compartment_id             = local.compartment_ocid
   vcn_id                     = oci_core_vcn.vcn.id
   display_name               = format("%s-subnet-private", lower(var.res_prefix))
   cidr_block                 = var.vcn_cidr

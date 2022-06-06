@@ -12,8 +12,8 @@ data template_file "bcs_installer" {
     oci_region            = var.region
     oci_fingerprint       = var.fingerprint
     oci_tenancy_ocid      = var.tenancy_ocid
-    oci_user_ocid         = var.user_ocid
-    oci_compartment_ocid  = var.compartment_ocid
+    oci_user_ocid         = var.current_user_ocid
+    oci_compartment_ocid  = local.compartment_ocid
   }
 }
 

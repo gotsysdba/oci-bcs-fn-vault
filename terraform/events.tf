@@ -10,7 +10,7 @@ resource "oci_events_rule" "object_store_events_rule" {
       is_enabled  = "true"
     }
   }
-  compartment_id = var.compartment_ocid
+  compartment_id = local.compartment_ocid
   condition      = "{\"eventType\":[\"com.oraclecloud.objectstorage.createobject\",\"com.oraclecloud.objectstorage.updateobject\"],\"data\":{\"resourceName\":[\"file_chunk/*VAULT*\",\"sbt_catalog/*VAULT*\"],\"additionalDetails\":{\"bucketName\":[\"RMAN_BCS\"]}}}"
   display_name   = var.appl_name
   is_enabled     = "true"

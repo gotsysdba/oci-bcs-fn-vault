@@ -2,14 +2,14 @@
 # All rights reserved. The Universal Permissive License (UPL), Version 1.0 as shown at http://oss.oracle.com/licenses/upl
 
 resource "oci_logging_log_group" "events" {
-  compartment_id = var.compartment_ocid
+  compartment_id = local.compartment_ocid
   description  = "Event Logs"
   display_name = "Events"
 }
 
 resource "oci_logging_log" "invoke_log" {
   configuration {
-    compartment_id = var.compartment_ocid
+    compartment_id = local.compartment_ocid
     source {
       category    = "invoke"
       resource    = oci_functions_application.object_vault.id
@@ -26,7 +26,7 @@ resource "oci_logging_log" "invoke_log" {
 
 resource "oci_logging_log" "ruleexecutionlog_log" {
   configuration {
-    compartment_id = var.compartment_ocid
+    compartment_id = local.compartment_ocid
     source {
       category    = "ruleexecutionlog"
       resource    = oci_events_rule.object_store_events_rule.id

@@ -2,11 +2,11 @@
 # All rights reserved. The Universal Permissive License (UPL), Version 1.0 as shown at http://oss.oracle.com/licenses/upl
 
 data "oci_objectstorage_namespace" "namespace" {
-  compartment_id = var.compartment_ocid
+  compartment_id = local.compartment_ocid
 }
 
 data "oci_identity_compartment" "compartment" {
-  id = var.compartment_ocid
+  id = local.compartment_ocid
 }
 
 data "oci_identity_compartments" "oci_identity_compartments" {
@@ -24,7 +24,7 @@ data "oci_identity_regions" "oci_regions" {
 }
 
 data "oci_identity_user" "identity_user" {
-  user_id = var.user_ocid
+  user_id = var.current_user_ocid
 }
 
 data "oci_core_services" "core_services" {}
@@ -35,7 +35,7 @@ data "oci_identity_availability_domains" "availability_domains" {
 
 data "oci_database_db_nodes" "db_system" {
   count          = var.database_demo ? 1 : 0
-  compartment_id = var.compartment_ocid
+  compartment_id = local.compartment_ocid
   db_system_id   = oci_database_db_system.db_system[0].id
 }
 

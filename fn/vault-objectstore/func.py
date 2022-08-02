@@ -6,25 +6,21 @@ import oci.object_storage
 from fdk import response
 
 def copy_object(signer, namespace, src_bucket, dst_bucket, object_name):
-    try:
-        objstore = oci.object_storage.ObjectStorageClient(config={}, signer=signer)
-        objstore_composite_ops = oci.object_storage.ObjectStorageClientCompositeOperations(objstore)
-        resp = objstore_composite_ops.copy_object_and_wait_for_state(
-            namespace, 
-            src_bucket, 
-            oci.object_storage.models.CopyObjectDetails(
-                destination_bucket=dst_bucket, 
-                destination_namespace=namespace,
-                destination_object_name=object_name,
-                destination_region=signer.region,
-                source_object_name=object_name
-            )
+    objstore = oci.object_storage.ObjectStorageClient(config={}, signer=signer)
+    objstore_composite_ops = oci.object_storage.ObjectStorageClientCompositeOperations(objstore)
+    resp = objstore_composite_ops.copy_object_and_wait_for_state(
+        namespace, 
+        src_bucket, 
+        oci.object_storage.models.CopyObjectDetails(
+            destination_bucket=dst_bucket, 
+            destination_namespace=namespace,
+            destination_object_name=object_name,
+            destination_region=signer.region,
+            source_object_name=object_name
         )
-    except (Exception, ValueError) as ex:
-        logging.getLogger().error(str(ex))
-        return {"response": str(ex)}
+    )
 
-    return {"response": str(response)}
+    return {"response": str(resp)}
 
 
 def handler(ctx, data: io.BytesIO=None):

@@ -8,7 +8,7 @@ import oci, argparse
 # Local Functions
 ##############################################################################
 ## Print Header Center Bold
-def print_centerBold(msg, width=80):
+def print_center_bold(msg, width=80):
     print("\033[1m{}\033[0m".format(msg.center(width, "=")))
 
 ## Set Configuration Values, override defaults
@@ -23,7 +23,7 @@ def set_value(key, arg, config):
 
 ## Get the Object Storage Namespace - Verifies Connectivity
 def get_namespace(client):
-    print_centerBold("Connecting to Object Storage")
+    print_center_bold("Connecting to Object Storage")
     try:
         namespace = client.get_namespace().data
         print("Namespace: {}".format(namespace))
@@ -86,7 +86,7 @@ if __name__ == "__main__":
     objects = []
     objects = list_object_storage(object_storage_client, namespace, bucket, objects)
 
-    print_centerBold("Generating Catalog Script for Backup Pieces in {} Bucket".format(bucket))
+    print_center_bold("Generating Catalog Script for Backup Pieces in {} Bucket".format(bucket))
     f = open("cloud_catalog_vault.rman", "w")
     f.write('catalog device type \'sbt_tape\' backuppiece ' + ','.join(objects) + ';')
     f.close()

@@ -39,7 +39,7 @@ resource "oci_objectstorage_bucket" "rman_bcs_vault" {
   }
   storage_tier = "Standard"
   versioning   = "Disabled"
-  depends_on   = [ oci_identity_policy.bcs_policy ]
+  depends_on   = [oci_identity_policy.bcs_policy]
 }
 
 resource "oci_objectstorage_object_lifecycle_policy" "rman_bcs_vault" {

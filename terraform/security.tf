@@ -13,7 +13,7 @@ resource "oci_identity_policy" "bcs_policy" {
   compartment_id = data.oci_identity_compartments.oci_identity_compartments.compartments.*.compartment_id[0]
   description    = "Oracle Backup Cloud Service Object Storage Policies"
   name           = "OBCS_Object_Store"
-  statements     = [
+  statements = [
     "Allow dynamic-group OBCS_Functions to manage objects in compartment id ${local.compartment_ocid}",
     "Allow dynamic-group OBCS_Functions to manage buckets in compartment id ${local.compartment_ocid}",
     "Allow service objectstorage-${var.region} to manage object-family in compartment id ${local.compartment_ocid}"

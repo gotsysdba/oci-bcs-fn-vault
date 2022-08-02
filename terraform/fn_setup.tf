@@ -4,9 +4,9 @@
 resource "null_resource" "RepoLogin" {
   depends_on = [time_sleep.policy_sleep]
   provisioner "local-exec" {
-    command = "${var.container_engine} login ${local.oci_container_repository} --username ${local.oci_namespace}/${local.oci_username} --password-stdin <<< '${oci_identity_auth_token.auth_token.token}'"
+    command = "${var.container_engine} login ${local.oci_container_repository} --username ${local.oci_namespace}/${local.oci_username} --password-stdin <<< \"${oci_identity_auth_token.auth_token.token}\""
   }
-  
+
   provisioner "local-exec" {
     command     = "image=$(${var.container_engine} images ${var.appl_name} -q) ; ${var.container_engine} rmi -f $image &> /dev/null ; echo $image"
     working_dir = "${local.project_path}/../fn/${var.appl_name}"

@@ -6,7 +6,7 @@ resource "oci_core_vcn" "vcn" {
   display_name   = format("%s-vcn", lower(var.res_prefix))
   cidr_block     = var.vcn_cidr
   is_ipv6enabled = var.vcn_is_ipv6enabled
-  dns_label      = replace(lower(var.res_prefix),"-","")
+  dns_label      = replace(lower(var.res_prefix), "-", "")
 }
 
 resource "oci_core_nat_gateway" "nat_gateway" {

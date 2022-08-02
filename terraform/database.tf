@@ -40,13 +40,13 @@ resource "oci_database_db_system" "db_system" {
   hostname            = format("%s", lower(var.res_prefix))
   license_model       = "BRING_YOUR_OWN_LICENSE"
   node_count          = "1"
-  ssh_public_keys     = [ tls_private_key.ssh_keys[0].public_key_openssh ]
+  ssh_public_keys     = [tls_private_key.ssh_keys[0].public_key_openssh]
   subnet_id           = oci_core_subnet.subnet_private.id
-  nsg_ids             = [ ]
+  nsg_ids             = []
   time_zone           = "UTC"
   source              = null
   source_db_system_id = null
   lifecycle {
-      ignore_changes = [ db_home.0.database.0.pdb_name, ssh_public_keys, db_home[0].database[0].admin_password ]
+    ignore_changes = [db_home.0.database.0.pdb_name, ssh_public_keys, db_home[0].database[0].admin_password]
   }
 }

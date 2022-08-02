@@ -3,8 +3,8 @@
 
 resource "oci_logging_log_group" "events" {
   compartment_id = local.compartment_ocid
-  description  = "Event Logs"
-  display_name = "Events"
+  description    = "Event Logs"
+  display_name   = "Events"
 }
 
 resource "oci_logging_log" "invoke_log" {

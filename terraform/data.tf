@@ -10,9 +10,9 @@ data "oci_identity_compartment" "compartment" {
 }
 
 data "oci_identity_compartments" "oci_identity_compartments" {
-  compartment_id = var.tenancy_ocid
-  access_level   = "ACCESSIBLE"
-  name           = data.oci_identity_compartment.compartment.name
+  compartment_id            = var.tenancy_ocid
+  access_level              = "ACCESSIBLE"
+  name                      = data.oci_identity_compartment.compartment.name
   compartment_id_in_subtree = true
 }
 

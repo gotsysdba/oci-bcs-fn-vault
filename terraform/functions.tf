@@ -19,5 +19,5 @@ resource "oci_functions_function" "object_vault" {
   trace_config {
     is_enabled = "false"
   }
-  depends_on = [ null_resource.PushFunction ]
+  depends_on = [null_resource.PushFunction]
 }

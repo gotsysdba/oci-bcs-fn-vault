@@ -3,6 +3,9 @@
 ###########################################################
 connect target /
 run {
+  # set to the longest retention policy between devices (SBT v DISK)
+  # will override the lower retention policy in specific scripts
+  CONFIGURE RETENTION POLICY TO RECOVERY WINDOW OF 30 DAYS;
   CONFIGURE CONTROLFILE AUTOBACKUP ON;
   CONFIGURE CHANNEL DEVICE TYPE SBT PARMS
     'SBT_LIBRARY=/u01/app/oracle/oci/lib/libopc.so,

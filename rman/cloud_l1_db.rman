@@ -2,7 +2,7 @@
 # cloud_l1_db.rman
 ###########################################################
 connect target /
-@cloud_encrypt.rman
+@@encrypt.rman
 run {
   BACKUP DEVICE TYPE SBT 
     SECTION SIZE 64G INCREMENTAL LEVEL 1 DATABASE PLUS

@@ -1,12 +1,11 @@
 ###########################################################
-# cloud_l0_db.rman
+# disk_cloud_l0_db.rman
 ###########################################################
 connect target /
 @@encrypt.rman
+@@disk_l0_db.rman
 run {
-  BACKUP DEVICE TYPE SBT  
-    SECTION SIZE 64G INCREMENTAL LEVEL 0 DATABASE PLUS
-    ARCHIVELOG NOT BACKED UP DELETE INPUT;
+  BACKUP DEVICE TYPE SBT BACKUPSET COMPLETED AFTER 'SYSDATE-1'; 
   CROSSCHECK BACKUP DEVICE TYPE SBT;
-  DELETE OBSOLETE DEVICE TYPE SBT;
+  DELETE NOPROMPT OBSOLETE DEVICE TYPE SBT;
 }

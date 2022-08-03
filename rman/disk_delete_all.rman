@@ -1,9 +1,12 @@
 ###########################################################
-# obsolete_fra.rman
+# disk_delete_all.rman
 ###########################################################
 connect target /
+@@encrypt.rman
 run{
   CROSSCHECK BACKUP DEVICE TYPE DISK;
   CROSSCHECK COPY DEVICE TYPE DISK;
-  DELETE NOPROMPT OBSOLETE DEVICE TYPE DISK;
+  DELETE FORCE NOPROMPT BACKUP DEVICE TYPE DISK;
+  DELETE FORCE NOPROMPT COPY DEVICE TYPE DISK;
+  DELETE FORCE NOPROMPT BACKUP OF ARCHIVELOG ALL DEVICE TYPE DISK;
 }

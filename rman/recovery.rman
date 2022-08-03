@@ -2,7 +2,7 @@
 # cloud_recovery.rman
 ###########################################################
 connect target /
-@cloud_encrypt.rman
+@@encrypt.rman
 run {
   RESTORE DATABASE PREVIEW;
   SHUTDOWN ABORT;

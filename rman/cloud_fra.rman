@@ -2,9 +2,12 @@
 # cloud_fra.rman
 ###########################################################
 connect target /
-@cloud_encrypt.rman
+@@encrypt.rman
 run {
   BACKUP DEVICE TYPE SBT RECOVERY AREA;
   BACKUP DEVICE TYPE SBT RECOVERY FILES;
   BACKUP DEVICE TYPE SBT BACKUPSET ALL;
+  CROSSCHECK BACKUP DEVICE TYPE DISK;
+  CROSSCHECK COPY DEVICE TYPE DISK;
+  DELETE NOPROMPT OBSOLETE DEVICE TYPE DISK;
 }

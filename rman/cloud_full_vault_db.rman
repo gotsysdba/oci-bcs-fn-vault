@@ -2,7 +2,7 @@
 # cloud_full_vault_db.rman
 ###########################################################
 connect target /
-@cloud_encrypt.rman
+@@encrypt.rman
 run {
   # FORCE to avoid backup optimization
   BACKUP DEVICE TYPE SBT FORMAT 'FULL_VAULT_%u_%s_%p'

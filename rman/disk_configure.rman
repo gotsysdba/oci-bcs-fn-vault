@@ -1,0 +1,8 @@
+###########################################################
+# disk_configure.rman
+###########################################################
+connect target /
+run { 
+  CONFIGURE DEVICE TYPE DISK BACKUP TYPE TO COMPRESSED BACKUPSET PARALLELISM 4;
+  CONFIGURE CHANNEL DEVICE TYPE DISK FORMAT '/backup/%d/%U';
+}

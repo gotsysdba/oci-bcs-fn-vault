@@ -2,7 +2,7 @@
 # cloud_delete_all.rman
 ###########################################################
 connect target /
-@cloud_encrypt.rman
+@@encrypt.rman
 run{
   CROSSCHECK BACKUP DEVICE TYPE SBT;
   CROSSCHECK COPY DEVICE TYPE SBT;

@@ -1,20 +1,20 @@
-#!/bin/env ksh
+#!/bin/env bash
 ## Copyright © 2022, Oracle and/or its affiliates. 
 ## All rights reserved. The Universal Permissive License (UPL), Version 1.0 as shown at http://oss.oracle.com/licenses/upl
 
 ## Check tha the opc_installer.zip file exists
 if [[ ! -f ./opc_installer.zip ]]; then
-    print -- "Please download the Cloud Backup Module and stage the zip file here."
+    echo "Please download the Cloud Backup Module and stage the zip file here."
     exit 1
 fi
 
 ## Create the Bastion Tunnel
-print -- "Setting up Bastion Tunnel"
+echo "Setting up Bastion Tunnel"
 ${bastion_tunnel}
 sleep 10
 
 ## Create a Staging Directory
-print -- "Staging Files"
+echo "Staging Files"
 ssh  -i ${bastion_key} -p 8091 localhost 'sudo rm -rf /tmp/bcs; mkdir /tmp/bcs'
 
 ## Perform Some SCPs
@@ -51,16 +51,16 @@ cat <<- EOL | ssh  -i ${bastion_key} -p 8091 localhost 'cat > /tmp/bcs/bcs_insta
 
     rm -rf \$HOME/oci 2> /dev/null
 
-    print -- "Creating Default Profile"
+    echo "Creating Default Profile"
     # Using print over HEREDOC to avoid tab/EOF issues
-    print -- "[DEFAULT]" > \$HOME/.oci/config
-    print -- "compartment=${oci_compartment_ocid}" >> \$HOME/.oci/config
-    print -- "user=${oci_user_ocid}" >> \$HOME/.oci/config
-    print -- "fingerprint=${oci_fingerprint}" >> \$HOME/.oci/config
-    print -- "tenancy=${oci_tenancy_ocid}" >> \$HOME/.oci/config
-    print -- "region=${oci_region}" >> \$HOME/.oci/config
-    print -- "key_file=/home/oracle/.oci/bcs.pem" >> \$HOME/.oci/config
-    print -- "bucket=RMAN_BCS_VAULT" >> \$HOME/.oci/config
+    echo "[DEFAULT]" > \$HOME/.oci/config
+    echo "compartment=${oci_compartment_ocid}" >> \$HOME/.oci/config
+    echo "user=${oci_user_ocid}" >> \$HOME/.oci/config
+    echo "fingerprint=${oci_fingerprint}" >> \$HOME/.oci/config
+    echo "tenancy=${oci_tenancy_ocid}" >> \$HOME/.oci/config
+    echo "region=${oci_region}" >> \$HOME/.oci/config
+    echo "key_file=/home/oracle/.oci/bcs.pem" >> \$HOME/.oci/config
+    echo "bucket=RMAN_BCS_VAULT" >> \$HOME/.oci/config
 
     exit 0
 EOL

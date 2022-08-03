@@ -41,7 +41,7 @@ variable "scratch_build" {
 
 variable "database_demo" {
   description = "Provision DBCS database for Demo"
-  default     = false
+  default     = true
 }
 
 // VCN Configurations Variables

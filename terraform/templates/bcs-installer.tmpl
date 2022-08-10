@@ -24,6 +24,13 @@ scp -r -i ${bastion_key} -P 8091 ./opc_installer.zip localhost:/tmp/bcs
 
 cat <<- EOL | ssh  -i ${bastion_key} -p 8091 localhost 'cat > /tmp/bcs/bcs_installer.ksh'
     #!/bin/env ksh
+    
+    # Make sure running as oracle
+    if [[ \$(whoami) != "oracle" ]]; then
+        echo "This script must be run as oracle"
+        exit 1
+    fi
+
     export ORAENV_ASK=NO
     source /usr/local/bin/oraenv
 
@@ -31,6 +38,7 @@ cat <<- EOL | ssh  -i ${bastion_key} -p 8091 localhost 'cat > /tmp/bcs/bcs_insta
     mkdir -p \$HOME/oci
     mkdir -p \$ORACLE_BASE/oci/lib
     mkdir -p \$ORACLE_BASE/oci/oci_wallet
+    mkdir -p /u02/app/oracle/backup/\$ORACLE_SID
 
     unzip -o /tmp/bcs/opc_installer.zip -d \$HOME/oci
     mv /tmp/bcs/*.pem \$HOME/.oci/

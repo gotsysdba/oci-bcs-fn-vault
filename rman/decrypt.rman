@@ -1,7 +1,7 @@
 ###########################################################
-# encrypt.rman
+# decrypt.rman
 ###########################################################
 # Non-TDE direct to Cloud
-# SET ENCRYPTION ON IDENTIFIED BY 'Th1515R3quir3d#' ONLY;
+# SET DECRYPTION IDENTIFIED BY 'Th1515R3quir3d#';
 # TDE Enabled
 SET ENCRYPTION ON;

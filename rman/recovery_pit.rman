@@ -1,13 +1,14 @@
 ###########################################################
-# cloud_recovery.rman
+# recovery_pit.rman - 30 minutes ago
 ###########################################################
 connect target /
-@@encrypt.rman
+@@decrypt.rman
 run {
-  RESTORE DATABASE PREVIEW;
+  RESTORE DATABASE PREVIEW UNTIL TIME "SYSDATE - (30/1440)";
   SHUTDOWN ABORT;
   STARTUP MOUNT;
+  SET UNTIL TIME "SYSDATE - (30/1440)";
   RESTORE DATABASE;
   RECOVER DATABASE;
-  ALTER DATABASE OPEN;
+  ALTER DATABASE OPEN RESETLOGS;
 }

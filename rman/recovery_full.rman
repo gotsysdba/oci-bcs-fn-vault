@@ -1,0 +1,13 @@
+###########################################################
+# recovery_full.rman
+###########################################################
+connect target /
+@@decrypt.rman
+run {
+  RESTORE DATABASE PREVIEW;
+  SHUTDOWN ABORT;
+  STARTUP MOUNT;
+  RESTORE DATABASE;
+  RECOVER DATABASE;
+  ALTER DATABASE OPEN;
+}

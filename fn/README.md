@@ -36,10 +36,10 @@ The image can also be manually created and staged.
 
 Currently the image must be built on an x86 machine (i.e. not on ARM).  Substitute podman for docker if applicable.
 
-1. Install Podman/Docker and the Fn Project software
+1. Install [Podman](https://podman.io/)/Docker and the [Fn Project](https://fnproject.io/) software
 2. Copy the `func.py`, `funct.yaml`, and `requirements.txt` files
 3. Run `fn build --verbose`
-4. Save the image: `docker image save -o vault-objectstore.tar vault-objectstore:0.0.1`
+4. Save the image: `podman image save -o vault-objectstore.tar vault-objectstore:0.0.1`
 5. Compress the image: `gzip -f vault-objectstore.tar`
-6. Clean-up: `docker rmi vault-objectstore:0.0.1`
+6. Clean-up: `podman rmi vault-objectstore:0.0.1`
 7. Stage the image to `fn/vault-objectstore.tar.gz`

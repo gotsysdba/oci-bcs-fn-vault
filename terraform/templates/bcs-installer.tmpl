@@ -22,7 +22,7 @@ scp -r -i ${bastion_key} -P 8091 rman localhost:/tmp/bcs
 scp -r -i ${bastion_key} -P 8091 ${oci_priv_key_path} localhost:/tmp/bcs/bcs.pem
 scp -r -i ${bastion_key} -P 8091 ./opc_installer.zip localhost:/tmp/bcs
 
-cat <<- EOL | ssh  -i ${bastion_key} -p 8091 localhost 'cat > /tmp/bcs/bcs_installer.ksh'
+cat <<- EOL | ssh  -i ${bastion_key} -p 8091 localhost 'cat > /tmp/bcs/bcs-installer.ksh'
     #!/bin/env ksh
     
     # Make sure running as oracle
@@ -33,6 +33,12 @@ cat <<- EOL | ssh  -i ${bastion_key} -p 8091 localhost 'cat > /tmp/bcs/bcs_insta
 
     export ORAENV_ASK=NO
     source /usr/local/bin/oraenv
+
+    # Cleanup Previous Stages
+    rm -rf \$HOME/.oci 2> /dev/null
+    rm -rf \$HOME/oci 2> /dev/null
+    rm -rf \$HOME/rman 2> /dev/null
+    rm -rf \$ORACLE_BASE/oci 2> /dev/null
 
     mkdir -p \$HOME/.oci
     mkdir -p \$HOME/oci
@@ -59,7 +65,7 @@ cat <<- EOL | ssh  -i ${bastion_key} -p 8091 localhost 'cat > /tmp/bcs/bcs_insta
 
     rm -rf \$HOME/oci 2> /dev/null
 
-    echo "Creating Default Profile"
+    echo "Creating Default Profile (for catalog_vault.py script)"
     # Using print over HEREDOC to avoid tab/EOF issues
     echo "[DEFAULT]" > \$HOME/.oci/config
     echo "compartment=${oci_compartment_ocid}" >> \$HOME/.oci/config
@@ -74,3 +80,4 @@ cat <<- EOL | ssh  -i ${bastion_key} -p 8091 localhost 'cat > /tmp/bcs/bcs_insta
 EOL
 
 ssh  -i ${bastion_key} -p 8091 localhost 'sudo chown -R oracle:oinstall /tmp/bcs'
+ssh  -i ${bastion_key} -p 8091 localhost 'sudo su - oracle /tmp/bcs/bcs-installer.ksh'

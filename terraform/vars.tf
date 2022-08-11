@@ -22,7 +22,7 @@ variable "private_key_path" {
 // General Configuration
 variable "res_prefix" {
   description = "Prefix to all OCI Resources created with this code"
-  default     = "bcs"
+  default     = "bcs1"
 }
 
 variable "appl_name" {
@@ -46,7 +46,7 @@ variable "database_demo" {
 
 // VCN Configurations Variables
 variable "vcn_cidr" {
-  default = "10.0.0.0/29"
+  default = "10.0.100.0/29"
 }
 
 variable "vcn_is_ipv6enabled" {

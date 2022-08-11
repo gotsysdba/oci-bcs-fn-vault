@@ -4,11 +4,13 @@
 
 ## Oracle Backup Cloud Service with Serverless Fn for Vaulting
 
-This IaC sets up a Proof-of-Concept for the Oracle Backup Cloud Service to provide "Tape Vaulting" functionality via a Serverless Fn.
+This IaC sets up a Proof-of-Concept (PoC) for the Oracle Backup Cloud Service to provide "Tape Vaulting" functionality via a Serverless Fn.
 
 ## Architecture
 
+The PoC architecture includes a Virtual Cloud Network (VCN), an OCI Database System (DBCS), and Object Storage Buckets.  It is not compatible with Always Free tenancies.
 
+![OCI Architecture](architecture/architecture.drawio.png "OCI Architecture")
 
 ## Assumptions
 

@@ -1,0 +1,8 @@
+run {
+  startup nomount;
+  ALLOCATE CHANNEL c1 DEVICE TYPE SBT PARMS
+      'SBT_LIBRARY=/u01/app/oracle/oci/lib/libopc.so,
+      ENV=(OPC_PFILE=/u01/app/oracle/oci/oci_config.ora)';
+  SET DBID <>;
+  restore controlfile from autobackup;
+}

@@ -15,14 +15,14 @@ sleep 10
 
 ## Create a Staging Directory
 echo "Staging Files"
-ssh  -i ${bastion_key} -p 8091 localhost 'sudo rm -rf /tmp/bcs; mkdir /tmp/bcs'
+ssh  -i ${bastion_key} -p 8091 opc@localhost 'sudo rm -rf /tmp/bcs; mkdir /tmp/bcs'
 
 ## Perform Some SCPs
-scp -r -i ${bastion_key} -P 8091 rman localhost:/tmp/bcs
-scp -r -i ${bastion_key} -P 8091 ${oci_priv_key_path} localhost:/tmp/bcs/bcs.pem
-scp -r -i ${bastion_key} -P 8091 ./opc_installer.zip localhost:/tmp/bcs
+scp -r -i ${bastion_key} -P 8091 rman opc@localhost:/tmp/bcs
+scp -r -i ${bastion_key} -P 8091 ${oci_priv_key_path} opc@localhost:/tmp/bcs/bcs.pem
+scp -r -i ${bastion_key} -P 8091 ./opc_installer.zip opc@localhost:/tmp/bcs
 
-cat <<- EOL | ssh  -i ${bastion_key} -p 8091 localhost 'cat > /tmp/bcs/bcs-installer.ksh'
+cat <<- EOL | ssh  -i ${bastion_key} -p 8091 opc@localhost 'cat > /tmp/bcs/bcs-installer.ksh'
     #!/bin/env ksh
     
     # Make sure running as oracle
@@ -79,5 +79,5 @@ cat <<- EOL | ssh  -i ${bastion_key} -p 8091 localhost 'cat > /tmp/bcs/bcs-insta
     exit 0
 EOL
 
-ssh  -i ${bastion_key} -p 8091 localhost 'sudo chown -R oracle:oinstall /tmp/bcs'
-ssh  -i ${bastion_key} -p 8091 localhost 'sudo su - oracle /tmp/bcs/bcs-installer.ksh'
+ssh  -i ${bastion_key} -p 8091 opc@localhost 'sudo chown -R oracle:oinstall /tmp/bcs'
+ssh  -i ${bastion_key} -p 8091 opc@localhost 'sudo su - oracle /tmp/bcs/bcs-installer.ksh'

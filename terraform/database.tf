@@ -11,7 +11,7 @@ resource "random_password" "db_system_password" {
   override_special = "_#"
 }
 
-resource "oci_database_db_system" "db_system" {
+resource "oci_database_db_system" "database_db_system" {
   count                   = var.database_demo ? 1 : 0
   availability_domain     = local.availability_domain
   compartment_id          = local.compartment_ocid

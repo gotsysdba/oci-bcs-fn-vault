@@ -6,7 +6,7 @@ resource "oci_objectstorage_bucket" "filesystem" {
   auto_tiering          = "Disabled"
   compartment_id        = local.compartment_ocid
   name                  = "FILESYSTEM"
-  namespace             = data.oci_objectstorage_namespace.namespace.namespace
+  namespace             = data.oci_objectstorage_namespace.objectstorage_namespace.namespace
   object_events_enabled = "false"
   storage_tier          = "Standard"
   versioning            = "Enabled"
@@ -17,7 +17,7 @@ resource "oci_objectstorage_bucket" "rman_bcs" {
   auto_tiering          = "Disabled"
   compartment_id        = local.compartment_ocid
   name                  = "RMAN_BCS"
-  namespace             = data.oci_objectstorage_namespace.namespace.namespace
+  namespace             = data.oci_objectstorage_namespace.objectstorage_namespace.namespace
   object_events_enabled = "true"
   storage_tier          = "Standard"
   versioning            = "Disabled"
@@ -28,7 +28,7 @@ resource "oci_objectstorage_bucket" "rman_bcs_vault" {
   auto_tiering          = "Disabled"
   compartment_id        = local.compartment_ocid
   name                  = "RMAN_BCS_VAULT"
-  namespace             = data.oci_objectstorage_namespace.namespace.namespace
+  namespace             = data.oci_objectstorage_namespace.objectstorage_namespace.namespace
   object_events_enabled = "false"
   retention_rules {
     display_name = "30_DAY_RETENTION"
@@ -39,7 +39,7 @@ resource "oci_objectstorage_bucket" "rman_bcs_vault" {
   }
   storage_tier = "Standard"
   versioning   = "Disabled"
-  depends_on   = [oci_identity_policy.bcs_policy]
+  depends_on   = [time_sleep.policy_sleep, oci_identity_policy.bcs_policy]
 }
 
 resource "oci_objectstorage_object_lifecycle_policy" "rman_bcs_vault" {

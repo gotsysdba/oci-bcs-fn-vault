@@ -14,7 +14,8 @@ The PoC architecture includes a Virtual Cloud Network (VCN), an OCI Database Sys
 
 ## Assumptions
 
-* An existing OCI tenancy (this IaC POC is not Always Free Eligible)
+* An existing OCI tenancy (this IaC POC is not Always Free Eligible).
+* No quota/limit restrictions to provision the above architecture.
 
 ## Architecture Deployment
 
@@ -22,6 +23,8 @@ There are two main ways to deploy this Architecture:
 
 * Cloud Shell
 * Terraform Client (Advanced)
+
+Deployment takes approximately 30 minutes.
 
 ### **Cloud Shell**
 
@@ -39,6 +42,6 @@ Using [Cloud Shell](https://docs.oracle.com/en-us/iaas/Content/API/Concepts/clou
     * `terraform apply`
 7. Configure Oracle Cloud Backup Service on the DBCS
     * `cd ..`
-    * `./configure-oci-bcs.sh`
+    * `./bcs-installer.ksh`
 
 ### **Terraform Client**

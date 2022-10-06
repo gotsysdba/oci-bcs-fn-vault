@@ -26,6 +26,26 @@ resource "oci_core_route_table" "route_table_nat_gw" {
   }
 }
 
+resource "oci_core_service_gateway" "service_gateway" {
+  compartment_id = local.compartment_ocid
+  vcn_id         = oci_core_vcn.vcn.id
+  display_name   = format("%s-service-gw", lower(var.res_prefix))
+  services {
+    service_id = data.oci_core_services.core_services.services[0].id
+  }
+}
+
+resource "oci_core_route_table" "route_table_service_gw" {
+  compartment_id = local.compartment_ocid
+  vcn_id         = oci_core_vcn.vcn.id
+  display_name   = format("%s-route-table-service-gw", lower(var.res_prefix))
+  route_rules {
+    destination       = data.oci_core_services.core_services.services[0].cidr_block
+    destination_type  = "SERVICE_CIDR_BLOCK"
+    network_entity_id = oci_core_service_gateway.service_gateway.id
+  }
+}
+
 resource "oci_core_subnet" "subnet_private" {
   compartment_id             = local.compartment_ocid
   vcn_id                     = oci_core_vcn.vcn.id
@@ -39,13 +59,13 @@ resource "oci_core_subnet" "subnet_private" {
 
 resource "oci_core_default_security_list" "default_security_list" {
   compartment_id = var.compartment_ocid
-  display_name = "Default Security List for bcs1-vcn"
+  display_name   = "Default Security List for bcs1-vcn"
   egress_security_rules {
     description      = "Access to Object Storage for Backup Cloud Service"
     destination      = "134.70.0.0/16"
     destination_type = "CIDR_BLOCK"
-    protocol  = "6"
-    stateless = "false"
+    protocol         = "6"
+    stateless        = "false"
     tcp_options {
       max = "443"
       min = "443"
@@ -55,12 +75,19 @@ resource "oci_core_default_security_list" "default_security_list" {
     description      = "Access to Bastion Tunnel for SSH Access"
     destination      = var.vcn_cidr
     destination_type = "CIDR_BLOCK"
-    protocol  = "6"
-    stateless = "false"
+    protocol         = "6"
+    stateless        = "false"
     tcp_options {
       max = "22"
       min = "22"
     }
+  }
+  egress_security_rules {
+    description      = "Access to Container Registry for Functions"
+    destination      = data.oci_core_services.core_services.services[0].cidr_block
+    destination_type = "SERVICE_CIDR_BLOCK"
+    protocol         = "all"
+    stateless        = "false"
   }
   ingress_security_rules {
     protocol    = "6"

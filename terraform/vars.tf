@@ -6,6 +6,9 @@ variable "tenancy_ocid" {}
 variable "compartment_ocid" {
   default = ""
 }
+variable "iam_user_name" {
+  default = ""
+}
 variable "region" {}
 
 // Extra Hidden
@@ -44,9 +47,9 @@ variable "database_demo" {
   default     = true
 }
 
-// VCN Configurations Variables
+// VCN Configurations Variables - Avoid Shrinking as Fn requires a few
 variable "vcn_cidr" {
-  default = "10.0.100.0/29"
+  default = "10.0.100.0/28"
 }
 
 variable "vcn_is_ipv6enabled" {

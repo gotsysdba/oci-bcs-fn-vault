@@ -11,3 +11,4 @@ run {
   # Override Retention policy for Disk Based Backups to 1 L0 (and dependent L1s)
   DELETE NOPROMPT OBSOLETE REDUNDANCY 1 DEVICE TYPE DISK;
 }
+@@disk_archive.rman
